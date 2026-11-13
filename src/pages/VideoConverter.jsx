@@ -1,6 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import "./VideoConverter.css";
+import { API_URL } from "../utils/api";
 
 const formats = [
   { value: "mp4", label: "MP4", description: "Widely supported" },
@@ -153,7 +154,7 @@ function VideoConverter({ onBack }) {
     const xhr = new XMLHttpRequest();
     xhrRef.current = xhr;
 
-    xhr.open("POST", "/api/video/convert");
+    xhr.open("POST", API_URL("/api/video/convert"));
 
     // Upload progress
     xhr.upload.onprogress = (event) => {

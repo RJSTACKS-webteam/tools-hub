@@ -1,6 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import "./VideoCompressor.css";
+import { API_URL } from "../utils/api";
 
 const compressionSettings = {
   low: {
@@ -134,7 +135,7 @@ function VideoCompressor({ onBack }) {
       setProgress(25);
       setStatus("Uploading and preparing video...");
 
-      const response = await fetch("/api/video/compress", {
+      const response = await fetch(API_URL("/api/video/compress"), {
         method: "POST",
         body: formData,
       });

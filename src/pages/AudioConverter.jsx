@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./AudioConverter.css";
+import { API_URL } from "../utils/api";
 
 // Reusable audio player with animated waveform
 
@@ -202,7 +203,7 @@ export default function AudioConverter({ onBack }) {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open("POST", "/api/audio/convert");
+   xhr.open("POST", API_URL("/api/audio/convert"));
     xhr.responseType = "blob";
 
     xhr.upload.onprogress = (event) => {
