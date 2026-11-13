@@ -1,20 +1,23 @@
 
 import { useEffect, useRef, useState } from "react";
 import "./VideoCompressor.css";
-import { API_URL } from "../utils/api";
+import { getFFmpeg, fetchFile } from "../utils/ffmpeg";
 
 const compressionSettings = {
   low: {
     label: "Low",
     description: "Better quality",
+    crf: "28",
   },
   medium: {
     label: "Medium",
     description: "Balanced",
+    crf: "23",
   },
   high: {
     label: "High",
     description: "Smaller file",
+    crf: "20",
   },
 };
 
@@ -51,7 +54,9 @@ function VideoCompressor({ onBack }) {
   }, []);
 
   const formatSize = (bytes) => {
-    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024) {
+      return `${bytes} B`;
+    }
 
     if (bytes < 1024 * 1024) {
       return `${(bytes / 1024).toFixed(1)} KB`;
@@ -118,55 +123,122 @@ function VideoCompressor({ onBack }) {
 
     processingRef.current = true;
 
+    let ffmpeg = null;
+    let inputName = "";
+    const outputName = `compressed-output-${Date.now()}.mp4`;
+
     try {
       setLoading(true);
       setError("");
       setResult(null);
-      setProgress(10);
+      setProgress(5);
 
-      setStatus("Uploading video to server...");
+      setStatus("Loading browser video engine...");
 
-      const formData = new FormData();
+      // Load FFmpeg in the user's browser.
+      ffmpeg = await getFFmpeg((percentage) => {
+        const actualProgress = Math.max(
+          10,
+          Math.min(95, Math.round(percentage * 0.85 + 10))
+        );
 
-      formData.append("video", file);
-      formData.append("level", quality);
-      formData.append("resolution", resolution);
-
-      setProgress(25);
-      setStatus("Uploading and preparing video...");
-
-      const response = await fetch(API_URL("/api/video/compress"), {
-        method: "POST",
-        body: formData,
+        setProgress(actualProgress);
+        setStatus("Compressing video in your browser...");
       });
 
-      if (!response.ok) {
-        let message = "Video compression failed.";
+      setProgress(10);
+      setStatus("Preparing video...");
 
-        try {
-          const data = await response.json();
-          message = data.message || message;
-        } catch {
-          // Keep the default error message.
-        }
+      // Preserve the input file extension.
+      const extension = file.name.match(/\.([a-z0-9]+)$/i)?.[1] || "mp4";
 
-        throw new Error(message);
+      inputName = `input-video-${Date.now()}.${extension}`;
+
+      // Transfer the selected file into FFmpeg's virtual filesystem.
+      const inputData = await fetchFile(file);
+
+      await ffmpeg.writeFile(inputName, inputData);
+
+      const settings = compressionSettings[quality];
+
+      if (!settings) {
+        throw new Error("Invalid compression quality selected.");
       }
 
-      setProgress(90);
+      // Encode video locally using FFmpeg WebAssembly.
+      const args = [
+        "-i",
+        inputName,
+
+        "-map",
+        "0:v:0",
+
+        "-map",
+        "0:a?",
+
+        "-sn",
+        "-dn",
+
+        "-vf",
+        `scale=w='min(${resolution},iw)':h='min(${resolution},ih)':force_original_aspect_ratio=decrease:force_divisible_by=2`,
+
+        "-c:v",
+        "libx264",
+
+        "-preset",
+        "veryfast",
+
+        "-crf",
+        settings.crf,
+
+        "-threads",
+        "1",
+
+        "-c:a",
+        "aac",
+
+        "-b:a",
+        "128k",
+
+        "-movflags",
+        "+faststart",
+
+        "-pix_fmt",
+        "yuv420p",
+
+        outputName,
+      ];
+
+      setStatus("Compressing video locally...");
+      setProgress(10);
+
+      const exitCode = await ffmpeg.exec(args);
+
+      if (exitCode !== 0) {
+        throw new Error(
+          `Video compression failed. FFmpeg exited with code ${exitCode}.`
+        );
+      }
+
+      setProgress(95);
       setStatus("Preparing compressed video download...");
 
-      const outputBlob = await response.blob();
+      // Read the completed video from FFmpeg's virtual filesystem.
+      const outputData = await ffmpeg.readFile(outputName);
 
-      if (!outputBlob.size) {
+      if (!outputData || outputData.length === 0) {
         throw new Error("The compressed video is empty.");
       }
 
+      const outputBlob = new Blob([outputData], {
+        type: "video/mp4",
+      });
+
       const downloadURL = URL.createObjectURL(outputBlob);
 
-      const link = document.createElement("a");
-
       const originalName = file.name.replace(/\.[^/.]+$/, "");
+
+      const link = document.createElement("a");
 
       link.href = downloadURL;
       link.download = `${originalName}_compressed.mp4`;
@@ -192,7 +264,7 @@ function VideoCompressor({ onBack }) {
       setStatus("Compression completed successfully!");
 
     } catch (err) {
-      console.error("Video compression error:", err);
+      console.error("Browser video compression error:", err);
 
       setError(
         err.message || "Unable to compress this video."
@@ -202,6 +274,23 @@ function VideoCompressor({ onBack }) {
       setProgress(0);
 
     } finally {
+      // Remove temporary files from FFmpeg's virtual filesystem.
+      if (ffmpeg) {
+        if (inputName) {
+          try {
+            await ffmpeg.deleteFile(inputName);
+          } catch {
+            // Temporary input may already be deleted.
+          }
+        }
+
+        try {
+          await ffmpeg.deleteFile(outputName);
+        } catch {
+          // Temporary output may not exist.
+        }
+      }
+
       processingRef.current = false;
       setLoading(false);
     }
@@ -400,7 +489,8 @@ function VideoCompressor({ onBack }) {
 
             {loading && (
               <small>
-                Please keep this page open while processing.
+                Video is being processed locally on your device.
+                Please keep this page open.
               </small>
             )}
 
@@ -452,14 +542,14 @@ function VideoCompressor({ onBack }) {
         )}
 
         <div className="video-privacy-note">
-          🔒 Your video is temporarily uploaded to our server
-          for compression. Temporary files are deleted after processing.
+          🔒 Your video is processed locally in your browser.
+          It is not uploaded to our video server.
         </div>
 
         <p className="video-disclaimer">
-          Note: Compression time depends on video size, duration
-          and server performance. Output format is MP4 with
-          H.264 video and AAC audio.
+          Note: Compression time depends on video size, duration,
+          device performance and browser compatibility.
+          Output format is MP4 with H.264 video and AAC audio.
         </p>
 
       </div>

@@ -4,10 +4,14 @@ import { fetchFile, toBlobURL } from "@ffmpeg/util";
 
 let ffmpegInstance = null;
 let loadingPromise = null;
+let activeProgressCallback = null;
 
 export { fetchFile };
 
 export async function getFFmpeg(onProgress) {
+  activeProgressCallback =
+    typeof onProgress === "function" ? onProgress : null;
+
   if (ffmpegInstance) return ffmpegInstance;
   if (loadingPromise) return loadingPromise;
 
@@ -15,7 +19,14 @@ export async function getFFmpeg(onProgress) {
     const ffmpeg = new FFmpeg();
 
     ffmpeg.on("progress", ({ progress }) => {
-      onProgress?.(Math.round(progress * 100));
+      if (
+        typeof activeProgressCallback === "function" &&
+        Number.isFinite(progress)
+      ) {
+        activeProgressCallback(
+          Math.max(0, Math.min(100, Math.round(progress * 100)))
+        );
+      }
     });
 
     const base = "/ffmpeg";
@@ -36,13 +47,16 @@ export async function getFFmpeg(onProgress) {
     });
 
     ffmpegInstance = ffmpeg;
+
     return ffmpeg;
   })();
 
   try {
     return await loadingPromise;
   } catch (error) {
+    console.error("FFmpeg initialization failed:", error);
     loadingPromise = null;
+    activeProgressCallback = null;
     throw error;
   }
 }

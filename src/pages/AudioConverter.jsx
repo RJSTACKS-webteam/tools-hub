@@ -1,9 +1,9 @@
+
 import { useEffect, useRef, useState } from "react";
 import "./AudioConverter.css";
-import { API_URL } from "../utils/api";
+import { getFFmpeg, fetchFile } from "../utils/ffmpeg";
 
 // Reusable audio player with animated waveform
-
 function AudioPlayer({ src, title }) {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -121,13 +121,26 @@ const formats = [
   { value: "flac", label: "FLAC", description: "Lossless audio" },
 ];
 
+const audioMimeTypes = {
+  mp3: "audio/mpeg",
+  wav: "audio/wav",
+  ogg: "audio/ogg",
+  m4a: "audio/mp4",
+  flac: "audio/flac",
+};
+
 export default function AudioConverter({ onBack }) {
+  const processingRef = useRef(false);
+
   const [file, setFile] = useState(null);
   const [originalUrl, setOriginalUrl] = useState("");
+
   const [format, setFormat] = useState("mp3");
+
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState("");
+
   const [error, setError] = useState("");
   const [outputUrl, setOutputUrl] = useState("");
   const [outputName, setOutputName] = useState("");
@@ -147,11 +160,9 @@ export default function AudioConverter({ onBack }) {
 
   // Clean up the converted audio preview URL.
   useEffect(() => {
-    return () => {
-      if (outputUrl) {
-        URL.revokeObjectURL(outputUrl);
-      }
-    };
+    if (!outputUrl) return;
+
+    return () => URL.revokeObjectURL(outputUrl);
   }, [outputUrl]);
 
   const handleFileChange = (selectedFile) => {
@@ -159,11 +170,7 @@ export default function AudioConverter({ onBack }) {
     setStatus("");
     setProgress(0);
 
-    if (outputUrl) {
-      URL.revokeObjectURL(outputUrl);
-      setOutputUrl("");
-    }
-
+    setOutputUrl("");
     setOutputName("");
 
     if (!selectedFile) {
@@ -186,91 +193,177 @@ export default function AudioConverter({ onBack }) {
     setFile(selectedFile);
   };
 
-  const convertAudio = () => {
+  // Build FFmpeg arguments for the selected audio format.
+  const buildAudioArgs = (inputName, outputName) => {
+    const args = [
+      "-i",
+      inputName,
+      "-vn",
+    ];
+
+    // MP3
+    if (format === "mp3") {
+      args.push(
+        "-c:a", "libmp3lame",
+        "-b:a", "192k"
+      );
+    }
+
+    // WAV
+    else if (format === "wav") {
+      args.push(
+        "-c:a", "pcm_s16le"
+      );
+    }
+
+    // OGG
+    else if (format === "ogg") {
+      args.push(
+        "-c:a", "libvorbis",
+        "-q:a", "5"
+      );
+    }
+
+    // AAC in M4A container
+    else if (format === "m4a") {
+      args.push(
+        "-c:a", "aac",
+        "-b:a", "192k"
+      );
+    }
+
+    // FLAC
+    else if (format === "flac") {
+      args.push(
+        "-c:a", "flac"
+      );
+    }
+
+    else {
+      throw new Error("Unsupported audio output format.");
+    }
+
+    args.push(outputName);
+
+    return args;
+  };
+
+  const convertAudio = async () => {
     if (!file) {
       setError("Please select an audio file first.");
       return;
     }
 
+    if (processingRef.current) return;
+
+    processingRef.current = true;
+
+    let ffmpeg = null;
+    let inputName = "";
+
+    const outputName = `converted-audio-${Date.now()}.${format}`;
+
     setLoading(true);
     setError("");
-    setProgress(0);
-    setStatus("Uploading audio...");
+    setProgress(3);
+    setStatus("Loading browser audio engine...");
 
-    const formData = new FormData();
-    formData.append("audio", file);
-    formData.append("format", format);
+    setOutputUrl("");
+    setOutputName("");
 
-    const xhr = new XMLHttpRequest();
-
-   xhr.open("POST", API_URL("/api/audio/convert"));
-    xhr.responseType = "blob";
-
-    xhr.upload.onprogress = (event) => {
-      if (event.lengthComputable) {
-        const uploadProgress = Math.round(
-          (event.loaded / event.total) * 100
+    try {
+      // Load FFmpeg locally in the user's browser.
+      ffmpeg = await getFFmpeg((percentage) => {
+        const actualProgress = Math.max(
+          8,
+          Math.min(95, Math.round(percentage * 0.85 + 10))
         );
 
-        setProgress(Math.min(uploadProgress, 90));
+        setProgress(actualProgress);
+        setStatus("Converting audio locally...");
+      });
 
-        if (uploadProgress >= 100) {
-          setStatus("Converting audio...");
-        }
+      setProgress(8);
+      setStatus("Preparing audio...");
+
+      // Preserve the original input extension.
+      const extension =
+        file.name.match(/\.([a-z0-9]{1,8})$/i)?.[1] || "audio";
+
+      inputName = `input-audio-${Date.now()}.${extension}`;
+
+      // Write audio file into FFmpeg's virtual filesystem.
+      const inputData = await fetchFile(file);
+
+      await ffmpeg.writeFile(inputName, inputData);
+
+      setProgress(10);
+      setStatus(`Converting audio to ${format.toUpperCase()}...`);
+
+      // Execute audio conversion.
+      const args = buildAudioArgs(inputName, outputName);
+
+      const exitCode = await ffmpeg.exec(args);
+
+      if (exitCode !== 0) {
+        throw new Error(
+          `Conversion to ${format.toUpperCase()} failed. The required audio encoder may not be available in this FFmpeg build.`
+        );
       }
-    };
 
-    xhr.onload = async () => {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        const resultBlob = xhr.response;
+      setProgress(95);
+      setStatus("Preparing converted audio...");
 
-        if (!resultBlob || resultBlob.size === 0) {
-          setError("The server returned an empty audio file.");
-          setLoading(false);
-          setStatus("");
-          return;
+      // Read converted audio.
+      const outputData = await ffmpeg.readFile(outputName);
+
+      if (!outputData || outputData.length === 0) {
+        throw new Error("The converted audio file is empty.");
+      }
+
+      const resultBlob = new Blob([outputData], {
+        type: audioMimeTypes[format],
+      });
+
+      const url = URL.createObjectURL(resultBlob);
+
+      setOutputUrl(url);
+      setOutputName(`converted-audio.${format}`);
+
+      setProgress(100);
+      setStatus("Conversion completed successfully!");
+
+    } catch (err) {
+      console.error("Browser audio conversion error:", err);
+
+      setError(
+        err.message || "Unable to convert this audio file."
+      );
+
+      setStatus("");
+      setProgress(0);
+
+    } finally {
+      // Clean temporary files from FFmpeg's virtual filesystem.
+      if (ffmpeg) {
+        if (inputName) {
+          try {
+            await ffmpeg.deleteFile(inputName);
+          } catch {
+            // Temporary input may already be deleted.
+          }
         }
-
-        const url = URL.createObjectURL(resultBlob);
-
-        setOutputUrl(url);
-        setOutputName(`converted-audio.${format}`);
-        setProgress(100);
-        setStatus("Conversion completed successfully!");
-        setLoading(false);
-      } else {
-        let message = "Audio conversion failed.";
 
         try {
-          const responseText = await xhr.response.text();
-          const responseData = JSON.parse(responseText);
-          message = responseData.message || message;
+          await ffmpeg.deleteFile(outputName);
         } catch {
-          // Use the default error message.
+          // Temporary output may not exist.
         }
-
-        setError(message);
-        setLoading(false);
-        setStatus("");
-        setProgress(0);
       }
-    };
 
-    xhr.onerror = () => {
-      setError("Could not connect to the server. Please try again.");
+      processingRef.current = false;
       setLoading(false);
-      setStatus("");
-      setProgress(0);
-    };
-
-    xhr.onabort = () => {
-      setError("Conversion request was cancelled.");
-      setLoading(false);
-      setStatus("");
-      setProgress(0);
-    };
-
-    xhr.send(formData);
+    }
   };
 
   const formatSize = (bytes) => {
@@ -284,7 +377,11 @@ export default function AudioConverter({ onBack }) {
   return (
     <div className="audio-converter-page">
       <div className="audio-converter-header">
-        <button className="back-button" onClick={onBack}>
+        <button
+          className="back-button"
+          onClick={onBack}
+          disabled={loading}
+        >
           ← Back
         </button>
 
@@ -295,6 +392,7 @@ export default function AudioConverter({ onBack }) {
       </div>
 
       <div className="audio-converter-card">
+
         {/* Upload */}
         <div className="audio-upload-area">
           <input
@@ -303,7 +401,10 @@ export default function AudioConverter({ onBack }) {
             id="audio-file"
             hidden
             disabled={loading}
-            onChange={(e) => handleFileChange(e.target.files[0])}
+            onChange={(e) => {
+              handleFileChange(e.target.files?.[0]);
+              e.target.value = "";
+            }}
           />
 
           <label htmlFor="audio-file" className="audio-upload-label">
@@ -388,6 +489,7 @@ export default function AudioConverter({ onBack }) {
 
             <small>
               Conversion may take some time for large files.
+              Audio is processed locally on your device.
             </small>
           </div>
         )}
@@ -425,6 +527,7 @@ export default function AudioConverter({ onBack }) {
             </a>
           </div>
         )}
+
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import "./VideoConverter.css";
-import { API_URL } from "../utils/api";
+import { getFFmpeg, fetchFile } from "../utils/ffmpeg";
 
 const formats = [
   { value: "mp4", label: "MP4", description: "Widely supported" },
@@ -17,6 +17,41 @@ const qualityOptions = [
   { value: "low", label: "Low Quality" },
 ];
 
+const qualitySettings = {
+  high: {
+    crf: "20",
+    preset: "ultrafast",
+  },
+  medium: {
+    crf: "26",
+    preset: "ultrafast",
+  },
+  low: {
+    crf: "32",
+    preset: "ultrafast",
+  },
+};
+
+const webmQuality = {
+  high: "24",
+  medium: "32",
+  low: "40",
+};
+
+const aviQuality = {
+  high: "2",
+  medium: "5",
+  low: "8",
+};
+
+const outputMimeTypes = {
+  mp4: "video/mp4",
+  webm: "video/webm",
+  mov: "video/quicktime",
+  avi: "video/x-msvideo",
+  mkv: "video/x-matroska",
+};
+
 function formatSize(bytes) {
   if (!bytes) return "0 MB";
 
@@ -31,7 +66,7 @@ function VideoConverter({ onBack }) {
   const fileInputRef = useRef(null);
   const inputUrlRef = useRef(null);
   const outputUrlRef = useRef(null);
-  const xhrRef = useRef(null);
+  const processingRef = useRef(false);
 
   const [file, setFile] = useState(null);
   const [videoUrl, setVideoUrl] = useState("");
@@ -41,13 +76,12 @@ function VideoConverter({ onBack }) {
 
   const [converting, setConverting] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [uploadProgress, setUploadProgress] = useState(0);
 
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  // Clean up object URLs and active requests
+  // Clean up object URLs
   useEffect(() => {
     return () => {
       if (inputUrlRef.current) {
@@ -56,10 +90,6 @@ function VideoConverter({ onBack }) {
 
       if (outputUrlRef.current) {
         URL.revokeObjectURL(outputUrlRef.current);
-      }
-
-      if (xhrRef.current) {
-        xhrRef.current.abort();
       }
     };
   }, []);
@@ -72,7 +102,6 @@ function VideoConverter({ onBack }) {
     setMessage("");
     setResult(null);
     setProgress(0);
-    setUploadProgress(0);
 
     if (!selectedFile.type.startsWith("video/")) {
       setError("Please select a valid video file.");
@@ -121,122 +150,233 @@ function VideoConverter({ onBack }) {
     setError("");
     setMessage("");
     setProgress(0);
-    setUploadProgress(0);
 
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   };
 
-  // Convert video using Node.js backend
-  const startConversion = () => {
-    if (!file || converting) return;
+  // Build FFmpeg arguments for the selected output format
+  const buildConversionArgs = (inputName, outputName) => {
+    const args = [
+      "-i",
+      inputName,
+
+      "-map",
+      "0:v:0",
+
+      "-map",
+      "0:a?",
+
+      "-sn",
+      "-dn",
+    ];
+
+    // MP4, MOV and MKV
+    if (["mp4", "mov", "mkv"].includes(format)) {
+      const settings = qualitySettings[quality];
+
+      args.push(
+        "-c:v",
+        "libx264",
+
+        "-preset",
+        settings.preset,
+
+        "-crf",
+        settings.crf,
+
+        "-pix_fmt",
+        "yuv420p",
+
+        "-threads",
+        "1",
+
+        "-c:a",
+        "aac",
+
+        "-b:a",
+        "128k"
+      );
+
+      if (format === "mp4") {
+        args.push("-movflags", "+faststart");
+      }
+    }
+
+    // WebM
+    else if (format === "webm") {
+      args.push(
+        "-c:v",
+        "libvpx",
+
+        "-crf",
+        webmQuality[quality],
+
+        "-b:v",
+        "0",
+
+        "-deadline",
+        "realtime",
+
+        "-cpu-used",
+        "8",
+
+        "-threads",
+        "1",
+
+        "-c:a",
+        "libvorbis",
+
+        "-q:a",
+        "4"
+      );
+    }
+
+    // AVI
+    else if (format === "avi") {
+      args.push(
+        "-c:v",
+        "mpeg4",
+
+        "-q:v",
+        aviQuality[quality],
+
+        "-threads",
+        "1",
+
+        "-c:a",
+        "libmp3lame",
+
+        "-b:a",
+        "128k"
+      );
+    }
+
+    args.push(outputName);
+
+    return args;
+  };
+
+  // Convert video using browser FFmpeg
+  const startConversion = async () => {
+    if (!file || processingRef.current) return;
+
+    processingRef.current = true;
+
+    let ffmpeg = null;
+    let inputName = "";
+    const outputName = `converted-output-${Date.now()}.${format}`;
 
     setError("");
-    setMessage("Uploading video...");
+    setMessage("Loading browser video engine...");
     setResult(null);
-    setProgress(0);
-    setUploadProgress(0);
+    setProgress(3);
+    setConverting(true);
 
     if (outputUrlRef.current) {
       URL.revokeObjectURL(outputUrlRef.current);
       outputUrlRef.current = null;
     }
 
-    setConverting(true);
-
-    const formData = new FormData();
-
-    formData.append("video", file);
-    formData.append("format", format);
-    formData.append("quality", quality);
-
-    const xhr = new XMLHttpRequest();
-    xhrRef.current = xhr;
-
-    xhr.open("POST", API_URL("/api/video/convert"));
-
-    // Upload progress
-    xhr.upload.onprogress = (event) => {
-      if (event.lengthComputable) {
-        const percentage = Math.round(
-          (event.loaded / event.total) * 100
+    try {
+      // Load FFmpeg in the browser
+      ffmpeg = await getFFmpeg((percentage) => {
+        const actualProgress = Math.max(
+          8,
+          Math.min(95, Math.round(percentage * 0.85 + 10))
         );
 
-        setUploadProgress(percentage);
+        setProgress(actualProgress);
+        setMessage("Converting video locally...");
+      });
 
-        if (percentage >= 100) {
-          setMessage("Video uploaded. Conversion in progress...");
-          setProgress(90);
-        } else {
-          setProgress(Math.round(percentage * 0.9));
-        }
+      setProgress(8);
+      setMessage("Preparing video...");
+
+      // Preserve the input extension
+      const extension =
+        file.name.match(/\.([a-z0-9]{1,8})$/i)?.[1] || "mp4";
+
+      inputName = `input-video-${Date.now()}.${extension}`;
+
+      // Write selected video to FFmpeg virtual filesystem
+      const inputData = await fetchFile(file);
+
+      await ffmpeg.writeFile(inputName, inputData);
+
+      setProgress(10);
+      setMessage(`Converting video to ${format.toUpperCase()}...`);
+
+      // Execute conversion
+      const args = buildConversionArgs(inputName, outputName);
+
+      const exitCode = await ffmpeg.exec(args);
+
+      if (exitCode !== 0) {
+        throw new Error(
+          "Conversion failed. The selected format or codec may not be supported by this browser FFmpeg build. Try MP4."
+        );
       }
-    };
 
-    xhr.onload = async () => {
-      xhrRef.current = null;
+      setProgress(95);
+      setMessage("Preparing converted video...");
 
-      if (xhr.status >= 200 && xhr.status < 300) {
-        try {
-          const blob = xhr.response;
+      // Read converted output
+      const outputData = await ffmpeg.readFile(outputName);
 
-          if (!blob || blob.size === 0) {
-            throw new Error("The server returned an empty video.");
+      if (!outputData || outputData.length === 0) {
+        throw new Error("The converted video is empty.");
+      }
+
+      const blob = new Blob([outputData], {
+        type: outputMimeTypes[format],
+      });
+
+      const downloadUrl = URL.createObjectURL(blob);
+      outputUrlRef.current = downloadUrl;
+
+      const convertedFile = {
+        url: downloadUrl,
+        name: `converted-video.${format}`,
+        size: blob.size,
+      };
+
+      setResult(convertedFile);
+      setProgress(100);
+      setMessage("Video conversion completed successfully.");
+
+    } catch (err) {
+      console.error("Browser video conversion error:", err);
+
+      setError(
+        err.message || "Unable to convert this video."
+      );
+
+      setMessage("");
+      setProgress(0);
+
+    } finally {
+      // Clean up FFmpeg temporary files
+      if (ffmpeg) {
+        if (inputName) {
+          try {
+            await ffmpeg.deleteFile(inputName);
+          } catch {
+            // Temporary input may already be deleted.
           }
-
-          const downloadUrl = URL.createObjectURL(blob);
-          outputUrlRef.current = downloadUrl;
-
-          const convertedFile = {
-            url: downloadUrl,
-            name: `converted-video.${format}`,
-            size: blob.size,
-          };
-
-          setResult(convertedFile);
-          setProgress(100);
-          setMessage("Video conversion completed successfully.");
-        } catch (err) {
-          setError(err.message || "Unable to process converted video.");
-          setMessage("");
         }
-      } else {
-        let errorMessage = "Video conversion failed.";
 
         try {
-          const response = JSON.parse(xhr.responseText);
-
-          if (response.message) {
-            errorMessage = response.message;
-          }
+          await ffmpeg.deleteFile(outputName);
         } catch {
-          // Keep default error message
+          // Temporary output may not exist.
         }
-
-        setError(errorMessage);
-        setMessage("");
       }
 
+      processingRef.current = false;
       setConverting(false);
-    };
-
-    xhr.onerror = () => {
-      xhrRef.current = null;
-      setError("Network error. Please check your server connection.");
-      setMessage("");
-      setConverting(false);
-    };
-
-    xhr.onabort = () => {
-      xhrRef.current = null;
-      setError("Conversion request was cancelled.");
-      setMessage("");
-      setConverting(false);
-    };
-
-    xhr.responseType = "blob";
-    xhr.send(formData);
+    }
   };
 
   // Download converted video
@@ -404,12 +544,6 @@ function VideoConverter({ onBack }) {
             {message && (
               <p className="converter-message">{message}</p>
             )}
-
-            {converting && uploadProgress < 100 && (
-              <p className="converter-message">
-                Upload progress: {uploadProgress}%
-              </p>
-            )}
           </div>
         )}
 
@@ -453,13 +587,14 @@ function VideoConverter({ onBack }) {
           <strong>🔒 Privacy</strong>
 
           <p>
-            Your video is temporarily uploaded to our server
-            for conversion and deleted after processing.
+            Your video is processed locally in your browser.
+            It is not uploaded to our video server.
           </p>
         </div>
 
         <p className="converter-disclaimer">
-          Conversion time depends on video size, format and quality.
+          Conversion time depends on video size, format, quality
+          and device performance.
         </p>
 
       </div>
