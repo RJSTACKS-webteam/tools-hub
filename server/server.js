@@ -11,6 +11,31 @@ import crypto from "crypto";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// ========================================
+// CORS CONFIGURATION
+// ========================================
+
+const allowedOrigins = [
+  "https://tools-hub-lyart.vercel.app",
+];
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Vary", "Origin");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  }
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
