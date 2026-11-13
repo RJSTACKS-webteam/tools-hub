@@ -1,0 +1,286 @@
+
+.pdf-splitter-page {
+  min-height: 100vh;
+  padding: 35px 20px 60px;
+  background: #f5f6fa;
+  color: #202124;
+}
+
+.pdf-splitter-container {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.splitter-back-button {
+display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: fit-content;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 10px 15px;
+  border: 1px solid #e1e7f4;
+  border-radius: 11px;
+  background: #fff;
+  color: #5263d9;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.splitter-heading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.splitter-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.splitter-heading h1 {
+  margin: 0 0 10px;
+  font-size: 32px;
+  color: #171717;
+}
+
+.splitter-heading p {
+  color: #666;
+  line-height: 1.6;
+}
+
+.splitter-upload-box {
+  padding: 45px 20px;
+  background: white;
+  border: 2px dashed #c9b8ed;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.splitter-upload-icon {
+  font-size: 45px;
+}
+
+.splitter-upload-box h2 {
+  font-size: 21px;
+}
+
+.splitter-upload-box p {
+  color: #777;
+}
+
+.splitter-select-button {
+  display: inline-block;
+  margin: 15px 0;
+  padding: 13px 25px;
+  border-radius: 8px;
+  background: #6938c8;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.splitter-select-button:hover,
+.splitter-action-button:hover {
+  background: #5126a8;
+}
+
+.splitter-upload-box small {
+  display: block;
+  color: #888;
+}
+
+.splitter-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.splitter-file-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+}
+
+.splitter-file-icon {
+  font-size: 30px;
+}
+
+.splitter-file-details {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.splitter-file-details strong {
+  overflow-wrap: anywhere;
+  color: #252525;
+}
+
+.splitter-file-details span {
+  font-size: 13px;
+  color: #777;
+}
+
+.splitter-remove-button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  background: white;
+  color: #d33;
+  cursor: pointer;
+}
+
+.splitter-range-card {
+  padding: 25px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.04);
+}
+
+.splitter-range-card h2 {
+  margin-top: 0;
+  font-size: 21px;
+}
+
+.splitter-range-card > p {
+  color: #777;
+  font-size: 14px;
+}
+
+.splitter-range-card label {
+  display: block;
+  margin: 22px 0 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.splitter-range-card input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  background: white;
+  color: #222;
+  font-size: 15px;
+}
+
+.splitter-range-card input:focus {
+  border-color: #6938c8;
+  box-shadow: 0 0 0 3px rgba(105, 56, 200, 0.1);
+}
+
+.splitter-example {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 15px 0 22px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f5f2fc;
+  color: #554477;
+  font-size: 13px;
+}
+
+.splitter-action-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 9px;
+  background: #6938c8;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.splitter-action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.splitter-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+  color: #555;
+  font-size: 14px;
+}
+
+.splitter-loader {
+  width: 21px;
+  height: 21px;
+  border: 3px solid #ddd;
+  border-top-color: #6938c8;
+  border-radius: 50%;
+  animation: splitter-spin 0.8s linear infinite;
+}
+
+@keyframes splitter-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.splitter-message {
+  padding: 14px;
+  margin-top: 20px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.splitter-error {
+  background: #fff0f0;
+  border: 1px solid #ffcaca;
+  color: #c62828;
+}
+
+.splitter-success {
+  background: #eaf8ee;
+  border: 1px solid #bce5c7;
+  color: #20753b;
+}
+
+.splitter-privacy {
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 9px;
+  background: #eeebfa;
+  color: #4b3b75;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .pdf-splitter-page {
+    padding: 22px 12px 40px;
+  }
+
+  .splitter-heading h1 {
+    font-size: 26px;
+  }
+
+  .splitter-range-card {
+    padding: 17px;
+  }
+
+  .splitter-file-card {
+    flex-wrap: wrap;
+  }
+
+  .splitter-remove-button {
+    margin-left: auto;
+  }
+}

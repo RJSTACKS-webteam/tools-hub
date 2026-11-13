@@ -1,0 +1,431 @@
+
+.video-merger-page {
+  min-height: 100vh;
+  padding: 35px 20px 60px;
+  background: #f7f8fc;
+  color: #172033;
+}
+
+.video-merger-container {
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.merger-back-button {
+display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: fit-content;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 10px 15px;
+  border: 1px solid #e1e7f4;
+  border-radius: 9px;
+  background: #fff;
+  color: #5263d9;
+  font-size: 12px;
+  font-weight: 700;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.merger-back-button:hover {
+  color: #2563eb;
+}
+
+.merger-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.merger-heading-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  background: #dbeafe;
+  font-size: 28px;
+}
+
+.merger-heading h1 {
+  margin: 0 0 6px;
+  font-size: 30px;
+  color: #111827;
+}
+
+.merger-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.merger-upload-box {
+  background: #fff;
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  padding: 40px 20px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.merger-upload-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.merger-upload-box h2 {
+  margin: 0 0 8px;
+  color: #172033;
+  font-size: 21px;
+}
+
+.merger-upload-box p {
+  color: #64748b;
+  margin: 0 0 20px;
+  font-size: 14px;
+}
+
+.merger-select-button {
+  border: none;
+  border-radius: 9px;
+  padding: 12px 24px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.merger-select-button:hover {
+  background: #1d4ed8;
+}
+
+.merger-select-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.merger-upload-box small {
+  display: block;
+  margin-top: 14px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.merger-video-list {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 15px;
+  padding: 24px;
+  margin-bottom: 25px;
+}
+
+.merger-list-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.merger-list-heading h2 {
+  margin: 0 0 5px;
+  font-size: 20px;
+  color: #172033;
+}
+
+.merger-list-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.merger-list-heading > strong {
+  color: #2563eb;
+  font-size: 17px;
+  white-space: nowrap;
+}
+
+.merger-video-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  min-width: 0;
+}
+
+.merger-video-number {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.merger-video-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.merger-video-info strong {
+  display: block;
+  color: #172033;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.merger-video-info p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.merger-video-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.merger-video-actions button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: #fff;
+  color: #334155;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.merger-video-actions button:hover:not(:disabled) {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #2563eb;
+}
+
+.merger-video-actions button:last-child:hover:not(:disabled) {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+.merger-video-actions button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.merger-start-button {
+  width: 100%;
+  border: none;
+  border-radius: 9px;
+  padding: 14px 20px;
+  margin-top: 12px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.merger-start-button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.merger-start-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.merger-hint {
+  margin: 12px 0 0;
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.merger-progress-card,
+.merger-result {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 15px;
+  padding: 24px;
+  margin-bottom: 25px;
+}
+
+.merger-progress-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 13px;
+  color: #172033;
+  font-size: 14px;
+}
+
+.merger-progress-heading span {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.merger-progress-track {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #e2e8f0;
+}
+
+.merger-progress-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: #2563eb;
+  transition: width 0.3s ease;
+}
+
+.merger-progress-card > p {
+  margin: 12px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.merger-error {
+  padding: 14px 16px;
+  border-radius: 9px;
+  margin-bottom: 20px;
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  font-size: 14px;
+}
+
+.merger-result h2 {
+  margin: 0 0 20px;
+  color: #172033;
+  font-size: 21px;
+}
+
+.merger-result-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.merger-result-details > div {
+  padding: 15px;
+  border-radius: 9px;
+  background: #f8fafc;
+  min-width: 0;
+}
+
+.merger-result-details span {
+  display: block;
+  margin-bottom: 8px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.merger-result-details strong {
+  color: #172033;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.merger-privacy-note {
+  padding: 18px;
+  border-radius: 12px;
+  background: #eff6ff;
+  color: #1e40af;
+  margin-bottom: 15px;
+}
+
+.merger-privacy-note strong {
+  font-size: 14px;
+}
+
+.merger-privacy-note p {
+  margin: 7px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.merger-disclaimer {
+  text-align: center;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.merger-hidden-video,
+.merger-hidden-canvas {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .video-merger-page {
+    padding: 22px 14px 40px;
+  }
+
+  .merger-heading {
+    gap: 12px;
+  }
+
+  .merger-heading-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 23px;
+  }
+
+  .merger-heading h1 {
+    font-size: 24px;
+  }
+
+  .merger-heading p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .merger-upload-box {
+    padding: 30px 15px;
+  }
+
+  .merger-video-list,
+  .merger-progress-card,
+  .merger-result {
+    padding: 17px;
+  }
+
+  .merger-video-item {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .merger-video-actions {
+    gap: 4px;
+  }
+
+  .merger-video-actions button {
+    width: 29px;
+    height: 29px;
+  }
+
+  .merger-result-details {
+    grid-template-columns: 1fr;
+  }
+}

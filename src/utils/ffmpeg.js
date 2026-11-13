@@ -1,0 +1,48 @@
+
+import { FFmpeg } from "@ffmpeg/ffmpeg";
+import { fetchFile, toBlobURL } from "@ffmpeg/util";
+
+let ffmpegInstance = null;
+let loadingPromise = null;
+
+export { fetchFile };
+
+export async function getFFmpeg(onProgress) {
+  if (ffmpegInstance) return ffmpegInstance;
+  if (loadingPromise) return loadingPromise;
+
+  loadingPromise = (async () => {
+    const ffmpeg = new FFmpeg();
+
+    ffmpeg.on("progress", ({ progress }) => {
+      onProgress?.(Math.round(progress * 100));
+    });
+
+    const base = "/ffmpeg";
+
+    const coreURL = await toBlobURL(
+      `${base}/ffmpeg-core.js`,
+      "text/javascript"
+    );
+
+    const wasmURL = await toBlobURL(
+      `${base}/ffmpeg-core.wasm`,
+      "application/wasm"
+    );
+
+    await ffmpeg.load({
+      coreURL,
+      wasmURL,
+    });
+
+    ffmpegInstance = ffmpeg;
+    return ffmpeg;
+  })();
+
+  try {
+    return await loadingPromise;
+  } catch (error) {
+    loadingPromise = null;
+    throw error;
+  }
+}

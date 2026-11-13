@@ -1,0 +1,513 @@
+
+/* MAIN PAGE */
+
+.excel-pdf-page {
+  min-height: 100vh;
+  padding: 35px 20px 60px;
+  background: #f4f6fc;
+  color: #1e293b;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+.excel-pdf-page *,
+.excel-pdf-page *::before,
+.excel-pdf-page *::after {
+  box-sizing: border-box;
+}
+
+.excel-pdf-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* BACK BUTTON */
+
+.excel-pdf-back {
+  border: none;
+  background: #e9edff;
+  color: #465bdf;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.excel-pdf-back:hover {
+  background: #dce3ff;
+  transform: translateY(-1px);
+}
+
+/* HEADING */
+
+.excel-pdf-heading {
+  text-align: center;
+  margin: 40px 0 35px;
+}
+
+.excel-pdf-icon {
+  display: block;
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.excel-pdf-heading h1 {
+  margin: 0 0 12px;
+  font-size: 34px;
+  font-weight: 750;
+  color: #1e293b;
+}
+
+.excel-pdf-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* UPLOAD */
+
+.excel-pdf-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 350px;
+  padding: 45px 20px;
+  background: #fff;
+  border: 2px dashed #b9c5f4;
+  border-radius: 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.excel-pdf-upload:hover {
+  border-color: #536dfe;
+  background: #fafbff;
+}
+
+.excel-pdf-upload input {
+  display: none;
+}
+
+.excel-pdf-upload-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.excel-pdf-upload h3 {
+  margin: 5px 0 10px;
+  color: #1e293b;
+  font-size: 21px;
+}
+
+.excel-pdf-upload p {
+  color: #64748b;
+  font-size: 15px;
+  margin: 0 0 22px;
+}
+
+.excel-pdf-browse {
+  display: inline-block;
+  background: #536dfe;
+  color: #fff;
+  padding: 13px 27px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.excel-pdf-upload:hover .excel-pdf-browse {
+  background: #4056df;
+}
+
+.excel-pdf-upload small {
+  margin-top: 18px;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+/* LOADING */
+
+.excel-pdf-status {
+  text-align: center;
+  padding: 35px;
+  color: #64748b;
+}
+
+.excel-pdf-spinner {
+  width: 38px;
+  height: 38px;
+  margin: 0 auto 15px;
+  border: 4px solid #dbe3ff;
+  border-top-color: #536dfe;
+  border-radius: 50%;
+  animation: excelPdfSpin 0.8s linear infinite;
+}
+
+@keyframes excelPdfSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ERROR */
+
+.excel-pdf-error {
+  padding: 16px 20px;
+  margin: 20px 0;
+  background: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
+  border-radius: 11px;
+  font-size: 14px;
+}
+
+/* SELECTED FILE */
+
+.excel-pdf-file {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px 20px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
+}
+
+.excel-pdf-file > span {
+  font-size: 32px;
+}
+
+.excel-pdf-file div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.excel-pdf-file strong {
+  color: #1e293b;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.excel-pdf-file small {
+  margin-top: 6px;
+  color: #64748b;
+}
+
+.excel-pdf-file button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 9px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.excel-pdf-file button:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* SETTINGS */
+
+.excel-pdf-settings {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 15px;
+}
+
+.excel-pdf-setting {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.excel-pdf-setting label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.excel-pdf-setting select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: #fff;
+  color: #1e293b;
+  font-size: 14px;
+  outline: none;
+}
+
+.excel-pdf-setting select:focus {
+  border-color: #536dfe;
+  box-shadow: 0 0 0 3px rgba(83, 109, 254, 0.12);
+}
+
+/* PREVIEW HEADING */
+
+.excel-pdf-preview-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin: 35px 0 16px;
+}
+
+.excel-pdf-preview-heading h3 {
+  margin: 0 0 7px;
+  color: #1e293b;
+  font-size: 21px;
+}
+
+.excel-pdf-preview-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.excel-pdf-preview-heading > span {
+  background: #e9edff;
+  color: #465bdf;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* SPREADSHEET PREVIEW */
+
+.excel-pdf-preview {
+  width: 100%;
+  max-height: 650px;
+  overflow: auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+}
+
+.excel-pdf-table-wrapper {
+  width: 100%;
+  overflow: visible;
+}
+
+.excel-pdf-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #334155;
+  font-size: 13px;
+  background: #fff;
+}
+
+.excel-pdf-table td {
+  border: 1px solid #dbe2ea;
+  padding: 10px 12px;
+  min-width: 75px;
+  max-width: 300px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.excel-pdf-table tr:first-child td {
+  background: #edf1ff;
+  color: #263b9a;
+  font-weight: 700;
+}
+
+.excel-pdf-table tr:nth-child(even):not(:first-child) {
+  background: #f8faff;
+}
+
+/* EMPTY WORKSHEET */
+
+.excel-pdf-empty {
+  text-align: center;
+  padding: 55px 20px;
+}
+
+.excel-pdf-empty span {
+  font-size: 42px;
+}
+
+.excel-pdf-empty h3 {
+  color: #334155;
+}
+
+.excel-pdf-empty p {
+  color: #64748b;
+}
+
+/* ACTION BUTTONS */
+
+.excel-pdf-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 25px 0 40px;
+}
+
+.excel-pdf-actions button {
+  padding: 14px 25px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.excel-pdf-convert {
+  background: #536dfe;
+  color: #fff;
+  border: none;
+}
+
+.excel-pdf-convert:hover {
+  background: #4056df;
+  transform: translateY(-2px);
+}
+
+.excel-pdf-reset {
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+.excel-pdf-reset:hover {
+  background: #f1f5f9;
+}
+
+.excel-pdf-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* HOW IT WORKS */
+
+.excel-pdf-info {
+  background: #fff;
+  padding: 28px;
+  border-radius: 16px;
+  margin-top: 40px;
+  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.03);
+}
+
+.excel-pdf-info h3 {
+  text-align: center;
+  margin: 0 0 25px;
+  font-size: 21px;
+  color: #1e293b;
+}
+
+.excel-pdf-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.excel-pdf-steps div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.excel-pdf-steps span {
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e9edff;
+  color: #465bdf;
+  font-weight: 700;
+}
+
+.excel-pdf-steps p {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* PRIVACY */
+
+.excel-pdf-privacy {
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 28px;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+  .excel-pdf-page {
+    padding: 20px 12px 40px;
+  }
+
+  .excel-pdf-heading h1 {
+    font-size: 26px;
+  }
+
+  .excel-pdf-upload {
+    min-height: 290px;
+    padding: 30px 15px;
+  }
+
+  .excel-pdf-settings {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .excel-pdf-preview {
+    padding: 12px;
+  }
+
+  .excel-pdf-table {
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .excel-pdf-steps {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .excel-pdf-steps div {
+    justify-content: flex-start;
+  }
+
+  .excel-pdf-actions {
+    flex-direction: column;
+  }
+
+  .excel-pdf-actions button {
+    width: 100%;
+  }
+
+  .excel-pdf-info {
+    padding: 20px;
+  }
+}

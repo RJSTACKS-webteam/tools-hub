@@ -1,0 +1,287 @@
+
+.pdf-word-page {
+  min-height: 100vh;
+  padding: 35px 20px 60px;
+  background: #f5f6fa;
+  color: #202124;
+}
+
+.pdf-word-container {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.word-back-button {
+display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: fit-content;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 10px 15px;
+  border: 1px solid #e1e7f4;
+  border-radius: 11px;
+  background: #fff;
+  color: #5263d9;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.word-heading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.word-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.word-heading h1 {
+  margin: 0 0 10px;
+  font-size: 32px;
+  color: #171717;
+}
+
+.word-heading p {
+  color: #666;
+  line-height: 1.6;
+}
+
+.word-upload-box {
+  padding: 45px 20px;
+  background: white;
+  border: 2px dashed #c9b8ed;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.word-upload-icon {
+  font-size: 45px;
+}
+
+.word-upload-box h2 {
+  font-size: 21px;
+}
+
+.word-upload-box p {
+  color: #777;
+}
+
+.word-select-button {
+  display: inline-block;
+  margin: 15px 0;
+  padding: 13px 25px;
+  border-radius: 8px;
+  background: #6938c8;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.word-select-button:hover,
+.word-convert-button:hover {
+  background: #5126a8;
+}
+
+.word-upload-box small {
+  display: block;
+  color: #888;
+}
+
+.word-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.word-file-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+}
+
+.word-file-icon {
+  font-size: 30px;
+}
+
+.word-file-info {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.word-file-info strong {
+  overflow-wrap: anywhere;
+  color: #252525;
+}
+
+.word-file-info span {
+  font-size: 13px;
+  color: #777;
+}
+
+.word-remove-button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  background: white;
+  color: #d33;
+  cursor: pointer;
+}
+
+.word-convert-card {
+  padding: 25px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.04);
+  text-align: center;
+}
+
+.word-format-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  margin: 10px 0 20px;
+}
+
+.word-format-info div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #333;
+}
+
+.word-format-info div span {
+  font-size: 35px;
+}
+
+.word-format-info div strong {
+  font-size: 14px;
+}
+
+.word-arrow {
+  font-size: 25px;
+  color: #6938c8;
+}
+
+.word-convert-card > p {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.word-convert-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 9px;
+  background: #6938c8;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.word-convert-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.word-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+  color: #555;
+  font-size: 14px;
+}
+
+.word-loader {
+  width: 21px;
+  height: 21px;
+  border: 3px solid #ddd;
+  border-top-color: #6938c8;
+  border-radius: 50%;
+  animation: word-spin 0.8s linear infinite;
+}
+
+@keyframes word-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.word-message {
+  padding: 14px;
+  margin-top: 20px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.word-error {
+  background: #fff0f0;
+  border: 1px solid #ffcaca;
+  color: #c62828;
+}
+
+.word-success {
+  background: #eaf8ee;
+  border: 1px solid #bce5c7;
+  color: #20753b;
+}
+
+.word-privacy {
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 9px;
+  background: #eeebfa;
+  color: #4b3b75;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.word-note {
+  margin-top: 12px;
+  color: #777;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .pdf-word-page {
+    padding: 22px 12px 40px;
+  }
+
+  .word-heading h1 {
+    font-size: 26px;
+  }
+
+  .word-convert-card {
+    padding: 17px;
+  }
+
+  .word-format-info {
+    gap: 15px;
+  }
+
+  .word-file-card {
+    flex-wrap: wrap;
+  }
+
+  .word-remove-button {
+    margin-left: auto;
+  }
+}

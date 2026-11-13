@@ -1,0 +1,357 @@
+
+.image-draw-page {
+  min-height: 100vh;
+  padding: 30px 20px 50px;
+  background: #f5f7fb;
+  color: #172033;
+}
+
+.image-draw-container {
+  width: 100%;
+  max-width: 1250px;
+  margin: auto;
+}
+
+.image-draw-back {
+display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: fit-content;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 10px 15px;
+  border: 1px solid #e1e7f4;
+  border-radius: 11px;
+  background: #fff;
+  color: #5263d9;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.image-draw-heading {
+  margin-bottom: 25px;
+}
+
+.image-draw-heading h1 {
+  font-size: 30px;
+  margin: 0 0 8px;
+  color: #111827;
+}
+
+.image-draw-heading p {
+  color: #64748b;
+  margin: 0;
+}
+
+.image-draw-upload {
+  min-height: 330px;
+  background: white;
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.image-draw-upload-icon {
+  width: 65px;
+  height: 65px;
+  border-radius: 18px;
+  background: #e0eaff;
+  color: #2563eb;
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.image-draw-upload h2 {
+  margin: 0 0 8px;
+  color: #172033;
+}
+
+.image-draw-upload p,
+.image-draw-upload span {
+  color: #64748b;
+}
+
+.image-draw-upload span {
+  font-size: 12px;
+  margin-top: 12px;
+}
+
+.image-draw-primary,
+.image-draw-download {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 19px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.image-draw-primary:hover,
+.image-draw-download:hover {
+  background: #1d4ed8;
+}
+
+.image-draw-toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.image-draw-secondary {
+  background: white;
+  color: #334155;
+  border: 1px solid #dbe2ea;
+  border-radius: 9px;
+  padding: 11px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.image-draw-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.image-draw-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.image-draw-preview-card,
+.image-draw-panel {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.image-draw-preview-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.image-draw-preview-heading h3,
+.image-draw-panel h3 {
+  font-size: 16px;
+  margin: 0;
+  color: #172033;
+}
+
+.image-draw-preview-heading span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.image-draw-preview-stage {
+  min-height: 350px;
+  background-color: #e8edf5;
+  background-image:
+    linear-gradient(45deg, #d9e0eb 25%, transparent 25%),
+    linear-gradient(-45deg, #d9e0eb 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #d9e0eb 75%),
+    linear-gradient(-45deg, transparent 75%, #d9e0eb 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 12px;
+}
+
+.image-draw-source {
+  display: none;
+}
+
+.image-draw-canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 600px;
+  width: auto;
+  height: auto;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.image-draw-note {
+  margin: 12px 0 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.image-draw-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.image-draw-panel h3 {
+  margin-bottom: 15px;
+}
+
+.image-draw-panel label {
+  display: block;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 15px 0 8px;
+}
+
+.image-draw-tool-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.image-draw-tool-buttons button {
+  flex: 1;
+  min-height: 40px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  color: #334155;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.image-draw-tool-buttons button.active {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #2563eb;
+}
+
+.image-draw-panel input[type="range"] {
+  width: 100%;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+.image-draw-color-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.image-draw-color-row input[type="color"] {
+  width: 55px;
+  height: 40px;
+  padding: 3px;
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.image-draw-color-row span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.image-draw-color-presets {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.image-draw-color-presets button {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  cursor: pointer;
+}
+
+.image-draw-color-presets button.selected {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.image-draw-stroke-count {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #e2e8f0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.image-draw-stroke-count strong {
+  color: #172033;
+}
+
+.image-draw-panel select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  color: #172033;
+  font-size: 14px;
+}
+
+.image-draw-download {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.image-draw-download:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.image-draw-error {
+  margin-top: 15px;
+  padding: 12px;
+  background: #fee2e2;
+  color: #b91c1c;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+@media (max-width: 850px) {
+  .image-draw-workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 550px) {
+  .image-draw-page {
+    padding: 20px 12px 35px;
+  }
+
+  .image-draw-heading h1 {
+    font-size: 24px;
+  }
+
+  .image-draw-preview-card,
+  .image-draw-panel {
+    padding: 13px;
+  }
+
+  .image-draw-preview-stage {
+    min-height: 240px;
+  }
+
+  .image-draw-preview-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,705 @@
+
+/* =====================================
+   AUDIO MERGER — TOOLS HUB
+===================================== */
+
+.audio-merger-page {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 35px 24px 60px;
+  color: #172033;
+}
+
+.audio-merger-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.audio-merger-header .back-button {
+  flex-shrink: 0;
+  padding: 10px 17px;
+  border: 1px solid #e0e6f0;
+  border-radius: 10px;
+  background: #fff;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.audio-merger-header .back-button:hover {
+  border-color: #5278ed;
+  background: #f3f6ff;
+  color: #3159d9;
+}
+
+.audio-merger-header h1 {
+  margin: 0 0 6px;
+  color: #111827;
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: -0.7px;
+}
+
+.audio-merger-header p {
+  margin: 0;
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.audio-merger-card {
+  padding: 28px;
+  border: 1px solid #e5eaf2;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 10px 35px rgba(30, 50, 85, 0.06);
+}
+
+/* Upload */
+
+.audio-merger-upload {
+  overflow: hidden;
+  border: 2px dashed #c9d6ef;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f8faff, #f1f5ff);
+  transition: 0.25s ease;
+}
+
+.audio-merger-upload:hover {
+  border-color: #5278ed;
+  background: #f0f4ff;
+}
+
+.audio-merger-upload label {
+  display: flex;
+  min-height: 190px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.audio-merger-upload label > span {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  border-radius: 18px;
+  background: #e6edff;
+  color: #3159d9;
+  font-size: 32px;
+}
+
+.audio-merger-upload h3 {
+  margin: 0 0 8px;
+  color: #172033;
+  font-size: 19px;
+  font-weight: 750;
+}
+
+.audio-merger-upload p {
+  margin: 0 0 12px;
+  color: #718096;
+  font-size: 14px;
+}
+
+.audio-merger-upload small {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.merger-loading {
+  margin: 18px 0;
+  color: #3159d9;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Track heading */
+
+.merger-track-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 28px 0 17px;
+}
+
+.merger-track-heading h3 {
+  margin: 0 0 5px;
+  color: #202c41;
+  font-size: 18px;
+  font-weight: 750;
+}
+
+.merger-track-heading p {
+  margin: 0;
+  color: #8490a3;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.merger-track-heading > span {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border: 1px solid #e0e7f2;
+  border-radius: 9px;
+  background: #f8faff;
+  color: #4264b9;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+/* Track list */
+
+.merger-track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.merger-track {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 13px;
+  padding: 14px 15px;
+  border: 1px solid #e3e9f3;
+  border-radius: 13px;
+  background: #fff;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.merger-track:hover {
+  border-color: #c9d8f5;
+  background: #fafbff;
+}
+
+.merger-track-number {
+  display: flex;
+  width: 31px;
+  height: 31px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #f0f4ff;
+  color: #5274ce;
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.merger-track-icon {
+  display: flex;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #eaf0ff;
+  color: #3159d9;
+  font-size: 22px;
+}
+
+.merger-track-details {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.merger-track-details strong {
+  overflow: hidden;
+  color: #25334a;
+  font-size: 13px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.merger-track-details span {
+  color: #8390a5;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.merger-visualizer {
+  display: flex;
+  min-width: 65px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.merger-visualizer span {
+  width: 3px;
+  height: 5px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background: #4d7ce8;
+  opacity: 0.55;
+}
+
+.merger-visualizer.playing span {
+  opacity: 1;
+  animation: mergerWave 0.65s ease-in-out infinite alternate;
+  animation-delay: calc(var(--bar-index) * -0.055s);
+}
+
+@keyframes mergerWave {
+  0% { height: 5px; }
+  50% { height: 27px; }
+  100% { height: 12px; }
+}
+
+.merger-play-button {
+  display: flex;
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: none !important;
+  border-radius: 50%;
+  background: #3159d9 !important;
+  color: #fff !important;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 11px rgba(49, 89, 217, 0.17);
+  transition: 0.2s ease;
+}
+
+.merger-play-button:hover {
+  background: #2449bd !important;
+  color: #fff !important;
+  transform: scale(1.06);
+}
+
+.merger-track-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 5px;
+}
+
+.merger-track-actions button {
+  display: flex;
+  width: 29px;
+  height: 29px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e0e7f2;
+  border-radius: 7px;
+  background: #fff;
+  color: #536681;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.merger-track-actions button:hover:not(:disabled) {
+  border-color: #8da9ed;
+  background: #eff4ff;
+  color: #3159d9;
+}
+
+.merger-track-actions button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.merger-track-actions .merger-remove-button {
+  color: #d04444;
+}
+
+.merger-track-actions .merger-remove-button:hover {
+  border-color: #f2bcbc;
+  background: #fff1f1;
+  color: #c32e2e;
+}
+
+/* Summary */
+
+.merger-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+  margin-top: 21px;
+}
+
+.merger-summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 16px;
+  border: 1px solid #e0e8f8;
+  border-radius: 11px;
+  background: #f6f8ff;
+}
+
+.merger-summary span {
+  color: #72819b;
+  font-size: 12px;
+}
+
+.merger-summary strong {
+  color: #3159d9;
+  font-size: 19px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Merge button */
+
+.merger-actions {
+  margin-top: 21px;
+}
+
+.merger-merge-button {
+  width: 100%;
+  min-height: 51px;
+  padding: 13px 18px;
+  border: none !important;
+  border-radius: 11px;
+  background: #3159d9 !important;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow: 0 5px 14px rgba(49, 89, 217, 0.16);
+  transition: 0.2s ease;
+}
+
+.merger-merge-button:hover:not(:disabled) {
+  background: #2449bd !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(49, 89, 217, 0.22);
+}
+
+.merger-merge-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Error */
+
+.merger-error {
+  margin-top: 19px;
+  padding: 14px 16px;
+  border: 1px solid #fecaca;
+  border-radius: 11px;
+  background: #fff4f4;
+  color: #b42318;
+  font-size: 13px;
+}
+
+/* Result */
+
+.merger-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 27px;
+  padding: 28px 22px;
+  border: 1px solid #ccebd8;
+  border-radius: 16px;
+  background: #f4fbf6;
+  text-align: center;
+  animation: mergerResultAppear 0.3s ease;
+}
+
+.merger-success {
+  display: flex;
+  width: 49px;
+  height: 49px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #d9f5e4;
+  color: #16834a;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.merger-result > span {
+  color: #16834a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+
+.merger-result h3 {
+  margin: 0;
+  color: #147441;
+  font-size: 21px;
+}
+
+.merger-result p {
+  margin: 0;
+  color: #526477;
+  font-size: 13px;
+}
+
+.merger-output-player {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 13px;
+  border: 1px solid #dcebe2;
+  border-radius: 11px;
+  background: #fff;
+}
+
+.merger-output-player > span {
+  overflow: hidden;
+  flex: 1;
+  color: #40516b;
+  font-size: 12px;
+  font-weight: 650;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.merger-download-button {
+  min-width: 220px;
+  padding: 13px 22px;
+  border: none !important;
+  border-radius: 10px;
+  background: #16834a !important;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.merger-download-button:hover {
+  background: #116b3b !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+
+@keyframes mergerResultAppear {
+  from {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+  .audio-merger-page {
+    padding: 24px 15px 40px;
+  }
+
+  .audio-merger-card {
+    padding: 19px;
+  }
+
+  .merger-track {
+    gap: 9px;
+    padding: 11px;
+  }
+
+  .merger-visualizer {
+    min-width: 45px;
+    gap: 2px;
+  }
+
+  .merger-visualizer span {
+    width: 2px;
+  }
+
+  .merger-track-actions button {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 520px) {
+  .audio-merger-header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .audio-merger-header h1 {
+    font-size: 24px;
+  }
+
+  .audio-merger-header p {
+    font-size: 13px;
+  }
+
+  .merger-track {
+    flex-wrap: wrap;
+  }
+
+  .merger-track-details {
+    width: calc(100% - 110px);
+  }
+
+  .merger-track-actions {
+    margin-left: auto;
+  }
+
+  .merger-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .merger-visualizer.playing span {
+    animation: none;
+    height: 16px;
+  }
+}
+
+/* =====================================
+   PREMIUM MERGED AUDIO PLAYER
+===================================== */
+
+.audio-merger-card .merger-output-player {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 650px;
+  margin: 8px auto;
+  padding: 19px;
+  border: 1px solid #dce6f5;
+  border-radius: 17px;
+  background: #ffffff;
+  box-shadow: 0 5px 18px rgba(35, 70, 130, 0.06);
+  text-align: left;
+}
+
+.merger-output-player .merger-visualizer {
+  display: none;
+}
+
+.merger-output-player .merger-play-button {
+  grid-column: 1;
+  grid-row: 1;
+  width: 48px;
+  height: 48px;
+  font-size: 16px;
+}
+
+.merger-output-timeline {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.merger-output-filename {
+  display: block;
+  overflow: hidden;
+  color: #25334a;
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.merger-output-timeline input[type="range"] {
+  display: block;
+  width: 100%;
+  height: 6px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  background: #e2eaf7;
+  accent-color: #3159d9;
+  cursor: pointer;
+}
+
+.merger-output-times {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #718096;
+  font-size: 12px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Player hover and focus */
+
+.merger-output-player:focus-within {
+  border-color: #b9ccf4;
+  box-shadow: 0 6px 20px rgba(49, 89, 217, 0.09);
+}
+
+.merger-output-player .merger-play-button:hover {
+  transform: scale(1.06);
+}
+
+/* Result spacing */
+
+.merger-result {
+  padding: 30px 22px;
+}
+
+.merger-result h3 {
+  margin-top: 3px;
+}
+
+.merger-result .merger-download-button {
+  min-width: 240px;
+  min-height: 49px;
+  margin-top: 5px;
+}
+
+/* Small screens */
+
+@media (max-width: 480px) {
+  .audio-merger-card .merger-output-player {
+    grid-template-columns: 42px 1fr;
+    gap: 11px;
+    padding: 14px;
+  }
+
+  .merger-output-player .merger-play-button {
+    width: 42px;
+    height: 42px;
+  }
+
+  .merger-output-filename {
+    font-size: 12px;
+  }
+
+  .merger-result {
+    padding: 23px 13px;
+  }
+}

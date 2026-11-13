@@ -1,0 +1,409 @@
+.bg-remover-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 25px;
+  background: #f8fafc;
+  color: #172033;
+  box-sizing: border-box;
+}
+
+.bg-remover-header {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.bg-back-btn {
+display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: fit-content;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 10px 15px;
+  border: 1px solid #e1e7f4;
+  border-radius: 11px;
+  background: #fff;
+  color: #5263d9;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.bg-remover-header h1 {
+  margin: 0 0 7px;
+  font-size: 27px;
+  color: #111827;
+}
+
+.bg-remover-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Upload */
+
+.bg-upload-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 420px;
+}
+
+.bg-upload-box {
+  width: 100%;
+  max-width: 550px;
+  padding: 55px 25px;
+  text-align: center;
+  background: #ffffff;
+  border: 2px dashed #cbd5e1;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+
+.bg-upload-icon {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 35px;
+}
+
+.bg-upload-box h2 {
+  margin: 0 0 10px;
+  color: #172033;
+  font-size: 22px;
+}
+
+.bg-upload-box p {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.bg-upload-box span {
+  display: block;
+  margin-top: 17px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.bg-primary-btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Editor */
+
+.bg-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.bg-toolbar {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 22px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.bg-tool-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bg-control-label {
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bg-mode-buttons,
+.bg-history-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.bg-mode-buttons button,
+.bg-history-buttons button {
+  padding: 9px 13px;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.bg-mode-buttons button.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.bg-brush-control {
+  min-width: 180px;
+}
+
+.bg-brush-control input {
+  width: 100%;
+  accent-color: #2563eb;
+}
+
+.bg-history-buttons button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Canvas workspace */
+
+.bg-workspace {
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.bg-canvas-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.bg-canvas-heading strong {
+  color: #172033;
+  font-size: 15px;
+}
+
+.bg-canvas-heading span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.bg-canvas-wrapper {
+  width: 100%;
+  min-height: 300px;
+  max-height: 650px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
+
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(45deg, #dce2e9 25%, transparent 25%),
+    linear-gradient(-45deg, #dce2e9 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #dce2e9 75%),
+    linear-gradient(-45deg, transparent 75%, #dce2e9 75%);
+  background-size: 20px 20px;
+  background-position:
+    0 0,
+    0 10px,
+    10px -10px,
+    -10px 0;
+}
+
+.bg-canvas-wrapper canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 610px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.bg-canvas-wrapper p {
+  color: #475569;
+  font-size: 14px;
+}
+
+.bg-canvas-tip {
+  margin-top: 15px;
+  padding: 12px;
+  background: #eff6ff;
+  color: #334155;
+  border-radius: 7px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Download panel */
+
+.bg-download-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.bg-download-info h3 {
+  margin: 0 0 7px;
+  color: #172033;
+  font-size: 16px;
+}
+
+.bg-download-info p {
+  max-width: 450px;
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.bg-download-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.bg-download-btn,
+.bg-jpg-control button {
+  padding: 11px 17px;
+  background: #2563eb;
+  border: none;
+  border-radius: 7px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bg-jpg-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bg-jpg-control label {
+  color: #475569;
+  font-size: 12px;
+}
+
+.bg-jpg-control input {
+  width: 35px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+.bg-bottom-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bg-secondary-btn {
+  padding: 10px 17px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  color: #334155;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.bg-download-btn:hover,
+.bg-jpg-control button:hover,
+.bg-primary-btn:hover {
+  background: #1d4ed8;
+}
+
+.bg-secondary-btn:hover,
+.bg-history-buttons button:hover {
+  background: #e2e8f0;
+}
+
+@media (max-width: 650px) {
+  .bg-remover-page {
+    padding: 15px;
+  }
+
+  .bg-remover-header h1 {
+    font-size: 23px;
+  }
+
+  .bg-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .bg-brush-control {
+    width: 100%;
+  }
+
+  .bg-history-buttons {
+    width: 100%;
+  }
+
+  .bg-workspace {
+    padding: 12px;
+  }
+
+  .bg-canvas-wrapper {
+    min-height: 220px;
+    padding: 10px;
+  }
+
+  .bg-download-panel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .bg-download-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bg-download-btn,
+  .bg-jpg-control button {
+    width: 100%;
+  }
+
+  .bg-jpg-control {
+    flex-wrap: wrap;
+  }
+
+  .bg-bottom-actions {
+    justify-content: stretch;
+  }
+
+  .bg-secondary-btn {
+    width: 100%;
+  }
+}

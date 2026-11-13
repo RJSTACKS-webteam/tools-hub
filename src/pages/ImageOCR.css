@@ -1,0 +1,400 @@
+
+.image-ocr-page {
+  min-height: 100vh;
+  width: 100%;
+  padding: 25px;
+  box-sizing: border-box;
+  background: #f8fafc;
+  color: #172033;
+}
+
+.ocr-header {
+  margin-bottom: 25px;
+}
+
+.ocr-back-btn {
+display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: fit-content;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 10px 15px;
+  border: 1px solid #e1e7f4;
+  border-radius: 11px;
+  background: #fff;
+  color: #5263d9;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.ocr-header h1 {
+  margin: 0 0 8px;
+  color: #111827;
+  font-size: 28px;
+}
+
+.ocr-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Upload */
+
+.ocr-upload-card {
+  max-width: 560px;
+  margin: 65px auto;
+  padding: 55px 25px;
+  box-sizing: border-box;
+  text-align: center;
+  background: #ffffff;
+  border: 2px dashed #cbd5e1;
+  border-radius: 15px;
+}
+
+.ocr-upload-icon {
+  margin-bottom: 15px;
+  font-size: 45px;
+}
+
+.ocr-upload-card h2 {
+  margin: 0 0 10px;
+  color: #172033;
+  font-size: 22px;
+}
+
+.ocr-upload-card p {
+  margin: 0 0 23px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.ocr-upload-card > span {
+  display: block;
+  margin-top: 17px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+/* Workspace */
+
+.ocr-workspace {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1.2fr);
+  align-items: start;
+  gap: 20px;
+}
+
+.ocr-preview-card,
+.ocr-result-card {
+  min-width: 0;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.ocr-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.ocr-card-heading h3 {
+  margin: 0;
+  color: #172033;
+  font-size: 16px;
+}
+
+.ocr-remove-btn {
+  padding: 8px 12px;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  background: #fff1f2;
+  color: #dc2626;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.ocr-remove-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Preview */
+
+.ocr-image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 230px;
+  padding: 15px;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  background-image:
+    linear-gradient(45deg, #e2e8f0 25%, transparent 25%),
+    linear-gradient(-45deg, #e2e8f0 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e2e8f0 75%),
+    linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+  background-size: 20px 20px;
+  background-position:
+    0 0,
+    0 10px,
+    10px -10px,
+    -10px 0;
+}
+
+.ocr-image-preview img {
+  display: block;
+  max-width: 100%;
+  max-height: 350px;
+  object-fit: contain;
+}
+
+.ocr-file-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.ocr-file-details div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-wrap: anywhere;
+}
+
+.ocr-file-details span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.ocr-file-details strong {
+  color: #172033;
+  font-size: 13px;
+}
+
+/* OCR settings */
+
+.ocr-label {
+  display: block;
+  margin: 18px 0 9px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ocr-result-card select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  outline: none;
+  background: #ffffff;
+  color: #172033;
+  font-size: 13px;
+}
+
+.ocr-result-card select:focus {
+  border-color: #2563eb;
+}
+
+/* Buttons */
+
+.ocr-primary-btn,
+.ocr-secondary-btn {
+  padding: 11px 17px;
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ocr-primary-btn {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.ocr-primary-btn:hover {
+  background: #1d4ed8;
+}
+
+.ocr-secondary-btn {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+.ocr-secondary-btn:hover {
+  background: #cbd5e1;
+}
+
+.ocr-primary-btn:disabled,
+.ocr-secondary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ocr-extract-btn {
+  width: 100%;
+  margin-top: 18px;
+}
+
+/* Progress */
+
+.ocr-progress-section {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #eff6ff;
+}
+
+.ocr-progress-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: #334155;
+  font-size: 12px;
+}
+
+.ocr-progress-heading strong {
+  color: #2563eb;
+}
+
+.ocr-progress-track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #dbeafe;
+}
+
+.ocr-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #2563eb;
+  transition: width 0.2s ease;
+}
+
+.ocr-progress-section p {
+  margin: 10px 0 0;
+  color: #64748b;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.ocr-status {
+  margin: 14px 0;
+  color: #166534;
+  font-size: 12px;
+}
+
+/* Extracted text */
+
+.ocr-output {
+  display: block;
+  width: 100%;
+  min-height: 260px;
+  padding: 13px;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  background: #f8fafc;
+  color: #172033;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.ocr-output:focus {
+  border-color: #2563eb;
+}
+
+.ocr-output::placeholder {
+  color: #94a3b8;
+}
+
+.ocr-output-info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 9px;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.ocr-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 17px;
+}
+
+/* Messages */
+
+.ocr-error {
+  max-width: 650px;
+  margin: 15px auto;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 13px;
+}
+
+.ocr-privacy-note {
+  margin-top: 22px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+  .ocr-workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 550px) {
+  .image-ocr-page {
+    padding: 15px;
+  }
+
+  .ocr-header h1 {
+    font-size: 23px;
+  }
+
+  .ocr-upload-card {
+    margin: 35px auto;
+    padding: 40px 18px;
+  }
+
+  .ocr-preview-card,
+  .ocr-result-card {
+    padding: 15px;
+  }
+
+  .ocr-actions {
+    flex-direction: column;
+  }
+
+  .ocr-actions button {
+    width: 100%;
+  }
+}
