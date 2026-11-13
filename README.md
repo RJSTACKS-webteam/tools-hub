@@ -1,16 +1,92 @@
-# React + Vite
+# RJSTACKS – Tools Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+**All-in-One Online Tools Platform**
 
-Currently, two official plugins are available:
+RJSTACKS Tools Hub is an online platform providing useful tools for document management, image editing, video processing and everyday productivity.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Our goal is to provide simple, accessible and efficient tools through one platform.
 
-## React Compiler
+## 🌐 Live Website
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Live Demo:** [Add your website URL here after deployment]
 
-## Expanding the Oxlint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+### PDF Tools
+- PDF Compressor
+- PDF Merger
+- PDF Splitter
+- PDF Watermark
+- PDF Page Numbers
+- PDF to Word
+- Word to PDF
+- PowerPoint to PDF
+
+### Image Tools
+- Image Watermark
+- Image Editing
+
+### Video Tools
+- Video Compressor
+- Video Converter
+- Video Cutter
+- Video Merger
+
+### Other Tools
+- Additional productivity utilities
+
+## 🛠️ Technologies Used
+
+- React.js
+- Vite
+- JavaScript
+- CSS
+- Node.js
+
+## 💻 Local Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/RJSTACKS-webteam/tools-hub.git
+```
+
+Navigate to the project folder:
+
+```bash
+cd tools-hub
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+## 📁 Project Structure
+
+- `src/` – Application source code
+- `public/` – Static assets
+- `server/` – Server-side files
+
+## 🔒 Copyright & License
+
+Copyright © 2026 RJSTACKS. All rights reserved.
+
+This project is protected under a proprietary licence.
+
+Viewing the source code does not grant permission to copy, modify, distribute, reproduce or commercially exploit the software.
+
+See the [LICENSE](LICENSE) file for complete terms.
+
+## 👨‍💻 Developer
+
+**RJSTACKS**
+
+All rights reserved.
