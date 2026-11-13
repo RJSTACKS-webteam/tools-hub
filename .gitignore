@@ -25,3 +25,7 @@ dist-ssr
 .env
 .env.*
 !.env.example
+server/uploads/*
+server/outputs/*
+!server/uploads/.gitkeep
+!server/outputs/.gitkeep
